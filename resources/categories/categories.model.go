@@ -1,7 +1,10 @@
 package categories
 
 import (
+	"net/http"
 	"time"
+
+	"github.com/go-chi/render"
 )
 
 type Category struct {
@@ -12,4 +15,28 @@ type Category struct {
 
 func (Category) TableName() string {
 	return "category"
+}
+
+type CategoryRequest struct {
+	*Category
+}
+
+type CategoryResponse struct {
+	*Category
+}
+
+func NewCategoryResponse(categories *Category) *CategoryResponse {
+	return &CategoryResponse{categories}
+}
+
+func NewCategoryListResponse(categories []*Category) []render.Renderer {
+	list := []render.Renderer{}
+	for _, category := range categories {
+		list = append(list, NewCategoryResponse(category))
+	}
+	return list
+}
+
+func (f *CategoryResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
 }

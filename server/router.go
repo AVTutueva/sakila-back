@@ -1,6 +1,7 @@
 package server
 
 import (
+	"tsi/films_website/resources/categories"
 	"tsi/films_website/resources/films"
 
 	"github.com/go-chi/chi/v5"
@@ -17,6 +18,7 @@ func Router() chi.Router {
 		ExposedHeaders: []string{"Link"}, AllowCredentials: false, MaxAge: 300}))
 
 	router.Mount("/films", films.Routes())
+	router.Mount("/categories", categories.Routes())
 
 	return router
 }
