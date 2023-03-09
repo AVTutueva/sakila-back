@@ -8,21 +8,30 @@ import (
 	"os"
 
 	mysql_driver "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"log"
 )
 
 var DB *gorm.DB
 
 func Init() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	user := os.Getenv("DB_USER")
-	if len(user) == 0 {
-		user = "root"
-	}
+	// if len(user) == 0 {
+	// 	user = "root"
+	// }
 	password := os.Getenv("DB_PASSWORD")
-	if len(password) == 0 {
-		password = "$0w$K@Ny7kM6"
-	}
+	// if len(password) == 0 {
+	// 	password = "$0w$K@Ny7kM6"
+	// }
 
 	address := os.Getenv("DB_ADDRESS")
 	if len(address) == 0 {
